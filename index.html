@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #2196F3, #21CBF3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .payment-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(33, 150, 243, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+            border-color: rgba(33, 150, 243, 0.5);
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .payment-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 24px;
+            background: rgba(33, 150, 243, 0.2);
+        }
+
+        .payment-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .payment-details {
+            margin-bottom: 20px;
+        }
+
+        .payment-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #21CBF3;
+        }
+
+        .payment-name {
+            font-size: 1rem;
+            color: #b0b0b0;
+        }
+
+        .copy-btn {
+            background: linear-gradient(90deg, #2196F3, #21CBF3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(90deg, #1976D2, #00B0FF);
+            transform: scale(1.02);
+        }
+
+        .copy-btn i {
+            margin-right: 8px;
+        }
+
+        .qris-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .qris-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #21CBF3;
+        }
+
+        .qris-image {
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(33, 150, 243, 0.3);
+        }
+
+        .channel-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .channel-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(18, 140, 126, 0.4);
+        }
+
+        .channel-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(18, 140, 126, 0.6);
+        }
+
+        .channel-btn i {
+            margin-right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+
+        /* Animasi Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(33, 150, 243, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        .circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        .circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .circle:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 40%;
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .circle:nth-child(5) {
+            width: 70px;
+            height: 70px;
+            top: 10%;
+            left: 50%;
+            animation-delay: 8s;
+        }
+
+        .circle:nth-child(6) {
+            width: 90px;
+            height: 90px;
+            top: 70%;
+            left: 40%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        /* Responsif */
+        @media (max-width: 768px) {
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .payment-card {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>PAYMENT SIBGRIZLY</h1>
+            <p class="subtitle">Pilih metode pembayaran yang tersedia</p>
+        </header>
+
+        <div class="payment-grid">
+            <!-- DANA -->
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-logo">
+                        <i class="fas fa-wallet" style="color: #1296db;"></i>
+                    </div>
+                    <h2 class="payment-title">DANA</h2>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-number">087762133437</div>
+                    <div class="payment-name">SIBRA AMULISI</div>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard('087762133437')">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+
+            <!-- GOPAY -->
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-logo">
+                        <i class="fab fa-google-wallet" style="color: #00AA13;"></i>
+                    </div>
+                    <h2 class="payment-title">GOPAY</h2>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-number">087862600313</div>
+                    <div class="payment-name">ILHAMNILLAH</div>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard('087862600313')">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+
+            <!-- SEABANK -->
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-logo">
+                        <i class="fas fa-university" style="color: #00A2FF;"></i>
+                    </div>
+                    <h2 class="payment-title">SEABANK</h2>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-number">901125967718</div>
+                    <div class="payment-name">SIBRA AMULISI</div>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard('901125967718')">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+        </div>
+
+        <!-- QRIS -->
+        <div class="qris-section">
+            <h2 class="qris-title">QRIS</h2>
+            <img src="https://files.catbox.moe/e3y7cx.jpg" alt="QR Code" class="qris-image">
+        </div>
+
+        <!-- Saluran -->
+        <div class="channel-section">
+            <a href="https://whatsapp.com/channel/0029Vb6KivcLo4hbkznAWa2P" target="_blank" class="channel-btn">
+                <i class="fab fa-whatsapp"></i> Saluran WhatsApp
+            </a>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 Payment SibGrizly. Semua hak dilindungi.</p>
+        </footer>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Nomor berhasil disalin: ' + text);
+            }, function(err) {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        }
+
+        // Animasi tambahan untuk background
+        document.addEventListener('DOMContentLoaded', function() {
+            const circles = document.querySelectorAll('.circle');
+            circles.forEach(circle => {
+                const randomX = Math.random() * 100;
+                const randomY = Math.random() * 100;
+                const randomSize = Math.random() * 100 + 50;
+                const randomDuration = Math.random() * 20 + 10;
+                
+                circle.style.left = `${randomX}%`;
+                circle.style.top = `${randomY}%`;
+                circle.style.width = `${randomSize}px`;
+                circle.style.height = `${randomSize}px`;
+                circle.style.animationDuration = `${randomDuration}s`;
+            });
+        });
+    </script>
+</body>
+</html>
