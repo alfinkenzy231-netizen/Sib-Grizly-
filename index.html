@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Gateway</title>
+    <title>SibGrizly - Pembayaran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,181 +13,24 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        :root {
+            --primary: #000000;
+            --secondary: #FFFFFF;
+            --accent: #FF0000;
+            --gray: #333333;
+            --light-gray: #F5F5F5;
+        }
+
         body {
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
-            color: #fff;
+            background-color: var(--primary);
+            color: var(--secondary);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #2196F3, #21CBF3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #b0b0b0;
-            margin-bottom: 30px;
-        }
-
-        .payment-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .payment-card {
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(33, 150, 243, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .payment-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
-            border-color: rgba(33, 150, 243, 0.5);
-        }
-
-        .payment-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .payment-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 24px;
-            background: rgba(33, 150, 243, 0.2);
-        }
-
-        .payment-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .payment-details {
-            margin-bottom: 20px;
-        }
-
-        .payment-number {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #21CBF3;
-        }
-
-        .payment-name {
-            font-size: 1rem;
-            color: #b0b0b0;
-        }
-
-        .copy-btn {
-            background: linear-gradient(90deg, #2196F3, #21CBF3);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .copy-btn:hover {
-            background: linear-gradient(90deg, #1976D2, #00B0FF);
-            transform: scale(1.02);
-        }
-
-        .copy-btn i {
-            margin-right: 8px;
-        }
-
-        .qris-section {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .qris-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #21CBF3;
-        }
-
-        .qris-image {
-            max-width: 300px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(33, 150, 243, 0.3);
-        }
-
-        .channel-section {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .channel-btn {
-            display: inline-block;
-            background: linear-gradient(90deg, #25D366, #128C7E);
-            color: white;
-            text-decoration: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(18, 140, 126, 0.4);
-        }
-
-        .channel-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(18, 140, 126, 0.6);
-        }
-
-        .channel-btn i {
-            margin-right: 10px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #b0b0b0;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 40px;
-        }
-
-        /* Animasi Background */
-        .background-animation {
+        /* Background gelembung */
+        .bubbles {
             position: fixed;
             top: 0;
             left: 0;
@@ -196,205 +40,701 @@
             overflow: hidden;
         }
 
-        .circle {
+        .bubble {
             position: absolute;
+            bottom: -100px;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            background: rgba(33, 150, 243, 0.1);
-            animation: float 15s infinite linear;
+            animation: bubble-float 15s infinite ease-in;
         }
 
-        .circle:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
+        .bubble:nth-child(1) {
+            width: 40px;
+            height: 40px;
             left: 10%;
+            animation-duration: 15s;
             animation-delay: 0s;
         }
 
-        .circle:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            left: 80%;
+        .bubble:nth-child(2) {
+            width: 70px;
+            height: 70px;
+            left: 20%;
+            animation-duration: 20s;
             animation-delay: 2s;
         }
 
-        .circle:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            top: 80%;
-            left: 20%;
+        .bubble:nth-child(3) {
+            width: 30px;
+            height: 30px;
+            left: 35%;
+            animation-duration: 18s;
             animation-delay: 4s;
         }
 
-        .circle:nth-child(4) {
-            width: 100px;
-            height: 100px;
-            top: 40%;
-            left: 70%;
-            animation-delay: 6s;
-        }
-
-        .circle:nth-child(5) {
-            width: 70px;
-            height: 70px;
-            top: 10%;
+        .bubble:nth-child(4) {
+            width: 60px;
+            height: 60px;
             left: 50%;
-            animation-delay: 8s;
+            animation-duration: 22s;
+            animation-delay: 0s;
         }
 
-        .circle:nth-child(6) {
-            width: 90px;
-            height: 90px;
-            top: 70%;
-            left: 40%;
-            animation-delay: 10s;
+        .bubble:nth-child(5) {
+            width: 50px;
+            height: 50px;
+            left: 65%;
+            animation-duration: 17s;
+            animation-delay: 7s;
         }
 
-        @keyframes float {
+        .bubble:nth-child(6) {
+            width: 80px;
+            height: 80px;
+            left: 80%;
+            animation-duration: 25s;
+            animation-delay: 3s;
+        }
+
+        .bubble:nth-child(7) {
+            width: 35px;
+            height: 35px;
+            left: 90%;
+            animation-duration: 19s;
+            animation-delay: 1s;
+        }
+
+        @keyframes bubble-float {
             0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
+                bottom: -100px;
+                transform: translateX(0);
             }
             50% {
-                transform: translateY(-20px) rotate(180deg);
-                opacity: 0.7;
+                transform: translateX(100px);
             }
             100% {
-                transform: translateY(0) rotate(360deg);
-                opacity: 1;
+                bottom: 100%;
+                transform: translateX(-50px);
             }
+        }
+
+        /* Container utama */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        /* Konten utama */
+        .payment-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .note-box {
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .note-box i {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .method-card {
+            background-color: var(--gray);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .method-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .method-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .method-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .method-info {
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .btn-copy {
+            background-color: var(--gray);
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .btn-copy:hover {
+            background-color: #444;
+        }
+
+        /* Halaman detail */
+        .detail-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding-top: 20px;
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            background-color: transparent;
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .qr-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .qr-instruction {
+            color: #666;
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .account-details {
+            background-color: var(--gray);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .account-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--accent);
+            letter-spacing: 2px;
+            word-break: break-all;
+        }
+
+        .account-name {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .copy-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid var(--gray);
+            color: #aaa;
+        }
+
+        .wa-channel {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .wa-channel:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+        }
+
+        .reminder {
+            font-size: 1.1rem;
+            margin-top: 30px;
+            color: #ff6b6b;
+            font-weight: 600;
         }
 
         /* Responsif */
         @media (max-width: 768px) {
-            .payment-grid {
+            .payment-methods {
                 grid-template-columns: 1fr;
             }
             
-            h1 {
-                font-size: 2rem;
+            .method-card {
+                padding: 20px;
             }
             
-            .payment-card {
-                padding: 20px;
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .account-number {
+                font-size: 1.5rem;
+            }
+            
+            .qr-code {
+                width: 200px;
+                height: 200px;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Background Animation -->
-    <div class="background-animation">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
+    <!-- Background gelembung -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
     </div>
 
     <div class="container">
         <header>
-            <h1>PAYMENT SIBGRIZLY</h1>
-            <p class="subtitle">Pilih metode pembayaran yang tersedia</p>
+            <div class="logo">SibGrizly</div>
+            <div class="tagline">Sistem Pembayaran Online Cepat dan Aman</div>
         </header>
 
-        <div class="payment-grid">
-            <!-- DANA -->
-            <div class="payment-card">
-                <div class="payment-header">
-                    <div class="payment-logo">
-                        <i class="fas fa-wallet" style="color: #1296db;"></i>
-                    </div>
-                    <h2 class="payment-title">DANA</h2>
-                </div>
-                <div class="payment-details">
-                    <div class="payment-number">087762133437</div>
-                    <div class="payment-name">SIBRA AMULISI</div>
-                </div>
-                <button class="copy-btn" onclick="copyToClipboard('087762133437')">
-                    <i class="fas fa-copy"></i> Salin Nomor
-                </button>
+        <!-- Halaman utama metode pembayaran -->
+        <div id="paymentPage" class="payment-section">
+            <div class="note-box">
+                <i class="fas fa-exclamation-circle"></i>
+                Jangan lupa membawa bukti transfer agar di proses!!
             </div>
 
-            <!-- GOPAY -->
-            <div class="payment-card">
-                <div class="payment-header">
-                    <div class="payment-logo">
-                        <i class="fab fa-google-wallet" style="color: #00AA13;"></i>
+            <h2>Pilih Metode Pembayaran</h2>
+            
+            <div class="payment-methods">
+                <!-- QRIS -->
+                <div class="method-card" data-method="qris">
+                    <div class="method-icon">
+                        <i class="fas fa-qrcode"></i>
                     </div>
-                    <h2 class="payment-title">GOPAY</h2>
+                    <h3 class="method-title">QRIS</h3>
+                    <p class="method-info">Pindai kode QR menggunakan aplikasi e-wallet atau mobile banking Anda</p>
+                    <button class="btn btn-select" data-method="qris">
+                        <i class="fas fa-arrow-right"></i> Pilih Metode
+                    </button>
+                    <button class="btn btn-copy" data-copy="qris">
+                        <i class="far fa-copy"></i> Salin Instruksi
+                    </button>
                 </div>
-                <div class="payment-details">
-                    <div class="payment-number">087862600313</div>
-                    <div class="payment-name">ILHAMNILLAH</div>
-                </div>
-                <button class="copy-btn" onclick="copyToClipboard('087862600313')">
-                    <i class="fas fa-copy"></i> Salin Nomor
-                </button>
-            </div>
 
-            <!-- SEABANK -->
-            <div class="payment-card">
-                <div class="payment-header">
-                    <div class="payment-logo">
-                        <i class="fas fa-university" style="color: #00A2FF;"></i>
+                <!-- Dana -->
+                <div class="method-card" data-method="dana">
+                    <div class="method-icon">
+                        <i class="fas fa-wallet"></i>
                     </div>
-                    <h2 class="payment-title">SEABANK</h2>
+                    <h3 class="method-title">DANA</h3>
+                    <p class="method-info">Transfer ke nomor DANA berikut</p>
+                    <div class="account-number-small">087762133437</div>
+                    <div class="account-name-small">A/N SIBRA AMULISI</div>
+                    <button class="btn btn-select" data-method="dana">
+                        <i class="fas fa-arrow-right"></i> Pilih Metode
+                    </button>
+                    <button class="btn btn-copy" data-copy="087762133437">
+                        <i class="far fa-copy"></i> Salin Nomor
+                    </button>
                 </div>
-                <div class="payment-details">
-                    <div class="payment-number">901125967718</div>
-                    <div class="payment-name">SIBRA AMULISI</div>
+
+                <!-- Gopay -->
+                <div class="method-card" data-method="gopay">
+                    <div class="method-icon">
+                        <i class="fab fa-google-pay"></i>
+                    </div>
+                    <h3 class="method-title">GOPAY</h3>
+                    <p class="method-info">Transfer ke nomor GOPAY berikut</p>
+                    <div class="account-number-small">087862600313</div>
+                    <div class="account-name-small">A/N SIBRA AMULISI</div>
+                    <button class="btn btn-select" data-method="gopay">
+                        <i class="fas fa-arrow-right"></i> Pilih Metode
+                    </button>
+                    <button class="btn btn-copy" data-copy="087862600313">
+                        <i class="far fa-copy"></i> Salin Nomor
+                    </button>
                 </div>
-                <button class="copy-btn" onclick="copyToClipboard('901125967718')">
-                    <i class="fas fa-copy"></i> Salin Nomor
-                </button>
+
+                <!-- Seabank -->
+                <div class="method-card" data-method="seabank">
+                    <div class="method-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3 class="method-title">SEABANK</h3>
+                    <p class="method-info">Transfer ke rekening SEABANK berikut</p>
+                    <div class="account-number-small">901125967718</div>
+                    <div class="account-name-small">A/N SIBRA AMULISI</div>
+                    <button class="btn btn-select" data-method="seabank">
+                        <i class="fas fa-arrow-right"></i> Pilih Metode
+                    </button>
+                    <button class="btn btn-copy" data-copy="901125967718">
+                        <i class="far fa-copy"></i> Salin Nomor
+                    </button>
+                </div>
+
+                <!-- Bank Jago -->
+                <div class="method-card" data-method="bankjago">
+                    <div class="method-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="method-title">BANK JAGO</h3>
+                    <p class="method-info">Transfer ke rekening BANK JAGO berikut</p>
+                    <div class="account-number-small">102672395274</div>
+                    <div class="account-name-small">A/N SIBRA AMULISI</div>
+                    <button class="btn btn-select" data-method="bankjago">
+                        <i class="fas fa-arrow-right"></i> Pilih Metode
+                    </button>
+                    <button class="btn btn-copy" data-copy="102672395274">
+                        <i class="far fa-copy"></i> Salin Nomor
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- QRIS -->
-        <div class="qris-section">
-            <h2 class="qris-title">QRIS</h2>
-            <img src="https://files.catbox.moe/e3y7cx.jpg" alt="QR Code" class="qris-image">
-        </div>
+        <!-- Halaman detail pembayaran -->
+        <div id="detailPage" class="detail-container">
+            <button class="back-btn" id="backBtn">
+                <i class="fas fa-arrow-left"></i> Kembali ke Metode Lain
+            </button>
 
-        <!-- Saluran -->
-        <div class="channel-section">
-            <a href="https://whatsapp.com/channel/0029Vb6KivcLo4hbkznAWa2P" target="_blank" class="channel-btn">
-                <i class="fab fa-whatsapp"></i> Saluran WhatsApp
-            </a>
+            <div class="detail-content">
+                <h2 id="detailTitle">Detail Pembayaran</h2>
+                
+                <div class="qr-container" id="qrContainer">
+                    <h3>Kode QR Pembayaran</h3>
+                    <div class="qr-code">
+                        <img id="qrImage" src="" alt="QR Code">
+                    </div>
+                    <p class="qr-instruction" id="qrInstruction">
+                        <i class="fas fa-mouse-pointer"></i> Pencet lama pada gambar QR code untuk mendownload
+                    </p>
+                </div>
+
+                <div class="account-details" id="accountDetails">
+                    <h3>Informasi Pembayaran</h3>
+                    <div class="account-number" id="detailAccountNumber"></div>
+                    <div class="account-name" id="detailAccountName"></div>
+                    <button class="btn" id="copyDetailBtn">
+                        <i class="far fa-copy"></i> Salin Nomor Pembayaran
+                    </button>
+                </div>
+
+                <div class="reminder">
+                    <i class="fas fa-exclamation-triangle"></i> Jangan lupa screenshot/simpan bukti transfer!
+                </div>
+            </div>
         </div>
 
         <footer>
-            <p>&copy; 2023 Payment SibGrizly. Semua hak dilindungi.</p>
+            <p>Jika mengalami kesulitan, hubungi kami melalui:</p>
+            <a href="https://whatsapp.com/channel/0029Vb6KivcLo4hbkznAWa2P" target="_blank" class="wa-channel">
+                <i class="fab fa-whatsapp"></i> WhatsApp Channel SibGrizly
+            </a>
+            <p style="margin-top: 20px;">© 2023 SibGrizly. Semua hak dilindungi.</p>
         </footer>
     </div>
 
-    <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(function() {
-                alert('Nomor berhasil disalin: ' + text);
-            }, function(err) {
-                console.error('Gagal menyalin teks: ', err);
-            });
-        }
+    <!-- Notifikasi salin -->
+    <div class="copy-notification" id="copyNotification">
+        Nomor berhasil disalin!
+    </div>
 
-        // Animasi tambahan untuk background
-        document.addEventListener('DOMContentLoaded', function() {
-            const circles = document.querySelectorAll('.circle');
-            circles.forEach(circle => {
-                const randomX = Math.random() * 100;
-                const randomY = Math.random() * 100;
-                const randomSize = Math.random() * 100 + 50;
-                const randomDuration = Math.random() * 20 + 10;
-                
-                circle.style.left = `${randomX}%`;
-                circle.style.top = `${randomY}%`;
-                circle.style.width = `${randomSize}px`;
-                circle.style.height = `${randomSize}px`;
-                circle.style.animationDuration = `${randomDuration}s`;
+    <script>
+        // Data metode pembayaran
+        const paymentMethods = {
+            qris: {
+                title: "QRIS",
+                accountNumber: "Scan QR Code di atas",
+                accountName: "A/N SIBRA AMULISI",
+                qrImage: "https://files.catbox.moe/b3xttn.png",
+                instruction: "Pencet lama pada gambar QR code untuk mendownload"
+            },
+            dana: {
+                title: "DANA",
+                accountNumber: "087762133437",
+                accountName: "A/N SIBRA AMULISI",
+                qrImage: "",
+                instruction: "Transfer ke nomor DANA di atas"
+            },
+            gopay: {
+                title: "GOPAY",
+                accountNumber: "087862600313",
+                accountName: "A/N SIBRA AMULISI",
+                qrImage: "",
+                instruction: "Transfer ke nomor GOPAY di atas"
+            },
+            seabank: {
+                title: "SEABANK",
+                accountNumber: "901125967718",
+                accountName: "A/N SIBRA AMULISI",
+                qrImage: "",
+                instruction: "Transfer ke rekening SEABANK di atas"
+            },
+            bankjago: {
+                title: "BANK JAGO",
+                accountNumber: "102672395274",
+                accountName: "A/N SIBRA AMULISI",
+                qrImage: "",
+                instruction: "Transfer ke rekening BANK JAGO di atas"
+            }
+        };
+
+        // Elemen DOM
+        const paymentPage = document.getElementById('paymentPage');
+        const detailPage = document.getElementById('detailPage');
+        const backBtn = document.getElementById('backBtn');
+        const detailTitle = document.getElementById('detailTitle');
+        const qrContainer = document.getElementById('qrContainer');
+        const qrImage = document.getElementById('qrImage');
+        const qrInstruction = document.getElementById('qrInstruction');
+        const accountDetails = document.getElementById('accountDetails');
+        const detailAccountNumber = document.getElementById('detailAccountNumber');
+        const detailAccountName = document.getElementById('detailAccountName');
+        const copyDetailBtn = document.getElementById('copyDetailBtn');
+        const copyNotification = document.getElementById('copyNotification');
+        
+        // Menangani pemilihan metode pembayaran
+        document.querySelectorAll('.btn-select').forEach(button => {
+            button.addEventListener('click', function() {
+                const method = this.getAttribute('data-method');
+                showDetailPage(method);
             });
+        });
+        
+        // Menangani klik pada card metode
+        document.querySelectorAll('.method-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Hanya tangani klik langsung pada card, bukan pada tombol
+                if (!e.target.classList.contains('btn') && !e.target.closest('.btn')) {
+                    const method = this.getAttribute('data-method');
+                    showDetailPage(method);
+                }
+            });
+        });
+        
+        // Fungsi untuk menampilkan halaman detail
+        function showDetailPage(method) {
+            const methodData = paymentMethods[method];
+            
+            // Update detail halaman
+            detailTitle.textContent = `Pembayaran via ${methodData.title}`;
+            detailAccountNumber.textContent = methodData.accountNumber;
+            detailAccountName.textContent = methodData.accountName;
+            
+            // Tampilkan atau sembunyikan QR code
+            if (method === 'qris' && methodData.qrImage) {
+                qrImage.src = methodData.qrImage;
+                qrContainer.style.display = 'flex';
+                qrInstruction.textContent = methodData.instruction;
+            } else {
+                qrContainer.style.display = 'none';
+            }
+            
+            // Sembunyikan halaman utama, tampilkan halaman detail
+            paymentPage.style.display = 'none';
+            detailPage.style.display = 'flex';
+            
+            // Scroll ke atas
+            window.scrollTo(0, 0);
+        }
+        
+        // Tombol kembali
+        backBtn.addEventListener('click', function() {
+            paymentPage.style.display = 'flex';
+            detailPage.style.display = 'none';
+        });
+        
+        // Salin nomor dari halaman detail
+        copyDetailBtn.addEventListener('click', function() {
+            const accountNumber = detailAccountNumber.textContent;
+            if (accountNumber && accountNumber !== "Scan QR Code di atas") {
+                navigator.clipboard.writeText(accountNumber)
+                    .then(() => showCopyNotification())
+                    .catch(err => console.error('Gagal menyalin: ', err));
+            }
+        });
+        
+        // Salin nomor dari halaman utama
+        document.querySelectorAll('.btn-copy').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // Mencegah event bubbling ke card
+                
+                const copyText = this.getAttribute('data-copy');
+                let textToCopy = "";
+                
+                if (copyText === "qris") {
+                    textToCopy = "Silakan scan QR code pada halaman detail pembayaran QRIS";
+                } else {
+                    textToCopy = copyText;
+                }
+                
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => showCopyNotification())
+                    .catch(err => console.error('Gagal menyalin: ', err));
+            });
+        });
+        
+        // Tampilkan notifikasi salin
+        function showCopyNotification() {
+            copyNotification.classList.add('show');
+            
+            setTimeout(() => {
+                copyNotification.classList.remove('show');
+            }, 2000);
+        }
+        
+        // QR code download on long press
+        qrImage.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert("Gunakan 'Save Image As' untuk mengunduh QR code");
+        });
+        
+        // Tambahkan pesan untuk download QR code
+        qrImage.addEventListener('click', function() {
+            alert("Tekan lama pada gambar QR code untuk opsi download");
+        });
+        
+        // Inisialisasi: sembunyikan halaman detail saat pertama kali load
+        window.addEventListener('DOMContentLoaded', function() {
+            detailPage.style.display = 'none';
         });
     </script>
 </body>
